@@ -1,34 +1,25 @@
-import { app } from "./state"
+import { todoer } from "./state"
 
-const hotkeys = {
+export default function press(e) {
+    
+    if (e.key == "n" && e.ctrlKey) todoer.change_mode("create")
+    if (e.key == "e" && e.ctrlKey) todoer.change_mode("edit")
+    if (e.key == "d" && e.ctrlKey) todoer.change_mode("delete")
+    if (e.key == "m" && e.ctrlKey) todoer.mark_todo()
 
-    // ToDo
-    N: () => app.create_new_todo(),
-    "Enter": () => app.save_todo(),
-    "Escape": () => app.change_mode("view"),
+    if (e.key == "Enter") {
+        if (todoer.mode == "create") todoer.create_todo()
+        if (todoer.error) todoer.clean_error()
+        if (todoer.mode == "edit") todoer.save_todo()
+        if (todoer.mode == "delete") todoer.delete_todo()
+    }
+    if (e.key == "Escape") {
+        if (todoer.mode != "select") todoer.escape()
+    }
 
-    // Select
-    "digit": (i) => app.select_todo(i),
-    "ArrowUp": () => app.select_todo("up"),
-    "ArrowDown": () => app.select_todo("down"),
-
-    // E: () => console.log("edit todo"),
-    // M: () => console.log("mark todo"),
-    // D: () => console.log("delete todo"),
-    "Backspace": () => app.delete_todo(),
-
-}
-
-export default function press(key) {
-    // console.log(key)
-    // if (key !== "Enter") {
-        if (hotkeys[key]) hotkeys[key]()
-    // } else {
-        // if (app.mode !== "view") hotkeys["Enter"]()
-        // hotkeys["Enter"]()
-    // }
-
-    if (key.match(/[1-9]/)) {
-        if (app.mode === "view") hotkeys["digit"](key)
+    if (e.key == "ArrowDown") todoer.select_todo("ArrowDown")
+    if (e.key == "ArrowUp") todoer.select_todo("ArrowUp")
+    if (e.key.match(/[1-9]/) && todoer.mode == "select") {
+        todoer.select_todo(+e.key-1)
     }
 }

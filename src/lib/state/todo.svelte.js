@@ -1,14 +1,24 @@
-import * as db from '../db'
-
-class Todo {
-
-	// description = $state()
-	description = ""
+export default class Todo {
+	
+	text = $state("")
 	done = $state(false)
 
-	constructor(description) {
-		this.id = crypto.randomUUID()
-		this.description = description
+	constructor(initor) {
+		if (typeof initor == "string") {			
+			this.id = crypto.randomUUID()
+			this.text = initor
+		} else {
+			this.id = initor.id
+			this.text = initor.text
+			this.done = initor.done
+		}
+	}
+	get model() {
+		return {
+			id: this.id,
+			text: this.text,
+			done: this.done,
+		}
 	}
 
 	mark() {
@@ -17,5 +27,3 @@ class Todo {
 	}
 
 }
-
-export let todo = $state(new Todo())

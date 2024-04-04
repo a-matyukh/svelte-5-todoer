@@ -1,3 +1,3 @@
-import App from "./app.svelte.js"
+import Todoer from "./todoer.svelte.js"
 
-export let app = new App()
+export let todoer = new Todoer()

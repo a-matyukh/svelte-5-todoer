@@ -1,16 +1,37 @@
 <script>
-import { app } from "$lib/state"
-
+import Command from "./Command.svelte"
+const { mode, new_todo_text, oninput, error } = $props()
 let input = $state()
 $effect(() => input?.focus())
 </script>
 
-{#if app.mode === "create"}
-    <hr>
-    <h3>New todo</h3>
-    <input bind:this={input} type="text" bind:value={app.new_todo_text}>
-{/if}
-{#if app.show_error === "LIMIT"}
-    <hr>
-    <h3>LIMIT: restart or delete any todo</h3>
-{/if}
+<div>
+    {#if !error}
+        {#if mode !== "create"}
+            <Command hotkey="Shift + N">New todo</Command>
+        {:else}
+            <input type="text"
+                bind:this={input}
+                placeholder="Enter text for new todo"
+                value={new_todo_text}
+                {oninput}
+            >
+            <Command hotkey="Escape">Cancel</Command>
+            {#if new_todo_text !== ""}
+                <Command hotkey="Enter">Save</Command>
+            {/if}
+        {/if}
+    {:else}
+        <Command hotkey="Enter">
+            <p>You reach maximum todos length!</p>
+            <p>Delete some todos</p>
+        </Command>
+    {/if}
+</div>
+
+<style>
+div {
+    padding: 10px;
+    background-color: #eee;
+}
+</style>

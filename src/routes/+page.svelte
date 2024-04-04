@@ -1,20 +1,19 @@
 <script>
+import { NewTodo, TodoList } from "$lib/ui"
+import { todoer } from "$lib/state"
+todoer.init()
 import press from "$lib/kbd"
-// effect?
-import { onMount } from "svelte"
-onMount(() => document.addEventListener("keyup", e => press(e.key)))
-
-import NewTodo from "$lib/ui/NewTodo.svelte"
-import TodosList from "$lib/ui/TodosList.svelte"
-
-import { app } from "$lib/state"
+$effect(() => document.addEventListener("keyup", e => press(e)))
 </script>
 
-<h3>State</h3>
-<p>mode: {app.mode}</p>
-<p>screen_state: {app.screen_state}</p>
-<p>edited_todo_text: {app.edited_todo_text}</p>
-<hr>
-
-<TodosList />
-<NewTodo />
+<NewTodo 
+    mode={todoer.mode}
+    new_todo_text={todoer.new_todo_text}
+    oninput={e => todoer.new_todo_text = e.target.value}
+    error = {todoer.error}
+/>
+<TodoList
+    mode={todoer.mode}
+    list={todoer.todos}
+    selected_index={todoer.selected_index}
+/>

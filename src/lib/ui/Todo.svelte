@@ -1,29 +1,52 @@
 <script>
-import { app } from "$lib/state"
 const {
-    i, todo
+    i, todo, selected, editing, deleting
 } = $props()
-const selected = $derived(app.selected_todo_index === i)
+
+import Hotkey from "./Hotkey.svelte"
+import Command from "./Command.svelte"
 
 let input = $state()
-$effect(() => {
-    input?.focus()
-    app.edited_todo_text = todo
-})
+$effect(() => input?.focus())
 </script>
 
-<p class:selected>{i + 1}.
-    {#if app.mode == "edit" && selected}
-        <input bind:this={input} type="text" value={todo} on:input={(e) => app.edited_todo_text = input.value}>
-    {:else if app.mode == "delete" && selected}
-        Delete this todo? {todo}
-    {:else}
-        {todo}
+<div class:selected class:editing class:deleting>
+    {#if !selected && !deleting}
+        <Hotkey>{i}</Hotkey>
     {/if}
-</p>
+
+    {#if editing}
+        <input bind:this={input} type="text" bind:value={todo.text}>
+    {:else}
+        {todo.text}
+    {/if}
+    
+    - {todo.done}
+    {#if deleting}
+        <strong>Delete this todo?</strong>
+        <Command hotkey="Escape">Cancel</Command>
+        <Command hotkey="Enter">Save</Command>
+    {/if}
+</div>
 
 <style>
+div {
+    padding: 5px;
+    background-color: #eee;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .selected {
-    background-color: yellow;
+    padding: 15px;
+    outline: 3px solid blueviolet;
+}
+.editing {
+    outline: 3px solid orange;
+}
+.deleting {
+    padding-left: 15px;
+    outline: 3px solid orangered;
 }
 </style>
