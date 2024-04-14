@@ -1,5 +1,6 @@
 <script>
 import { Hotkey, Command, NewTodo, Todo, TodoList } from "$lib/ui"
+import TodoStore from "$lib/state/todo.svelte"
 </script>
 
 <h2>Storyboard</h2>
@@ -30,17 +31,17 @@ import { Hotkey, Command, NewTodo, Todo, TodoList } from "$lib/ui"
 <details>
     <summary>Todo</summary>
     <div>
-        <Todo i=1 todo="todo.text" />
-        <Todo i=1 todo="todo.text" selected />
-        <Todo i=1 todo="todo.text" editing />
+        <Todo i=1 todo={new TodoStore("todo.text")} />
+        <Todo i=1 todo={new TodoStore("todo.text")} selected />
+        <Todo i=1 todo={new TodoStore("todo.text")} editing />
         </div>
 </details>
 <details>
     <summary>TodoList</summary>
     <div>
         <TodoList mode="select" list={[]} selected_index={null} />
-        <TodoList mode="select" list={["todo.text"]} selected_index={0} />
-        <TodoList mode="select" list={["todo.text", "todo.text", "todo.text", "todo.text"]} selected_index={2} />
+        <TodoList mode="select" list={[new TodoStore("todo.text")]} selected_index={0} />
+        <TodoList mode="select" list={[new TodoStore("todo.text"), new TodoStore("todo.text"), new TodoStore("todo.text"), new TodoStore("todo.text")]} selected_index={2} />
     </div>
 </details>
 
