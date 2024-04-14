@@ -1,4 +1,4 @@
 <script>
-import State from "$lib/state/State.svelte"
+import State from "./State.svelte"
 </script>
 <State />

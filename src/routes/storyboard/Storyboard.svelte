@@ -1,5 +1,5 @@
 <script>
-import { Hotkey, Command, NewTodo, Todo, TodoList } from "."
+import { Hotkey, Command, NewTodo, Todo, TodoList } from "$lib/ui"
 </script>
 
 <h2>Storyboard</h2>

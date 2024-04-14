@@ -1,4 +1,4 @@
 <script>
-import { Storyboard } from "$lib/ui"
+import Storyboard from "./Storyboard.svelte"
 </script>
 <Storyboard />
