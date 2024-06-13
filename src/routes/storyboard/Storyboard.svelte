@@ -4,7 +4,7 @@ import TodoStore from "$lib/state/todo.svelte"
 </script>
 
 <h2>Storyboard</h2>
-<p>Storybook. UI. Components. Views. Карта-раскадровка компонентов. Дизайн-система.</p>
+<p>Storybook. UI. Components. Views. Component storyboard map. Design system.</p>
 <hr>
 <details>
     <summary>Hotkey</summary>
