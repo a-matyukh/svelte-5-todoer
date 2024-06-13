@@ -51,7 +51,7 @@ export default class Todoer {
 	}
 
     todos = $state([])
-    MAX_TODOS = 3
+    MAX_TODOS = 9
     async init() {
         this.todos = await db.getTodos()
         if (this.todos.length > 0) this.selected_index = 0
