@@ -8,7 +8,7 @@ $effect(() => input?.focus())
 <div>
     {#if !error}
         {#if mode !== "create"}
-            <Command hotkey="Shift + N">New todo</Command>
+            <Command hotkey="Ctrl + N">New todo</Command>
         {:else}
             <input type="text"
                 bind:this={input}
